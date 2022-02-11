@@ -1,18 +1,10 @@
 [
     {
-        "name":"Home",
+        "name":"All Movies",
         "link":"/"
     },
     {
-        "name":"Movies",
-        "link":"/movies"
-    },
-    {
-        "name":"Reports",
+        "name":"Generate Reports",
         "link":"/reports"
-    },
-    {
-        "name":"Add a Movie",
-        "link":"/movies/add"
     }
 ]
