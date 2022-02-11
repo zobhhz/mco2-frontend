@@ -1,0 +1,11 @@
+import axios from "axios";
+
+//console.log(process.env);
+
+// NODE APP PORT
+const port = 8080;
+
+export const axiosInstance = axios.create({
+    baseURL: "http://localhost:" + port,
+    headers: { "Access-Control-Allow-Origin": "*" },
+});
