@@ -4,4 +4,7 @@ module.exports = {
     eslint: {
         ignoreDuringBuilds: true,
     },
+    env: {
+        BASE_URL: process.env.BASE_URL,
+    },
 };

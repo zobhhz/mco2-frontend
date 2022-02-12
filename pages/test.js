@@ -8,7 +8,7 @@ const Test = () => {
     async function getMovies() {
         setLoading(true);
         try {
-            const { data } = await axiosInstance.get("/api/movies");
+            const { data } = await axiosInstance.get(`/api/movies`);
             console.log("DATA", data.data);
             setLoading(false);
             setMovies(data.data);

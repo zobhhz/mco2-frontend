@@ -1,11 +1,10 @@
 import axios from "axios";
 
-//console.log(process.env);
-
 // NODE APP PORT
 const port = 8080;
+const url = process.env.BASE_URL;
 
 export const axiosInstance = axios.create({
-    baseURL: "http://127.0.0.1:" + port,
+    baseURL: "http://" + url + ":" + port,
     headers: { "Access-Control-Allow-Origin": "*" },
 });
