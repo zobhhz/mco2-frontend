@@ -106,7 +106,7 @@ export default function Home() {
             <SEO title={"All Movies"} />
             <section className="px-8 md:px-32 py-2 mt-28 justify-center items-center">
                 {/* Header */}
-                <h1 className="text-center text-2xl md:text-6xl">All Movies</h1>
+                <h1 className="text-center text-2xl md:text-6xl mb-4">All Movies</h1>
 
                 {/* Search and Add Movie */}
                 <div className="flex flex-row justify-between mb-6">

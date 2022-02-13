@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Button from "../../components/Button/Button";
+import Radios from '../../components/Radios/Radios'
 import { useEffect, useState } from "react";
 import Layout from "../../components/layout";
 import SEO from "../../components/seo";
@@ -12,6 +13,8 @@ export default function Home() {
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
     const router = useRouter();
+    const [txLvl, setTxLvl] = useState("SERIALIZABLE"); // default is SERIALIZABLE
+
     const [movie, setMovie] = useState({
         uuid: "",
         name: "",
@@ -25,6 +28,9 @@ export default function Home() {
     //Updates the record on click
     const handleUpdate = async () => {
         try {
+            movie.txLvl = txLvl;
+            console.log(movie.txLvl);
+
             // PUT = update
             // POST = add
             // DELETE = delete
@@ -32,11 +38,12 @@ export default function Home() {
             setUpdating(true);
             await axios.put(`api/movies/${router.query.id}`, movie);
             setUpdating(false);
-
-            //TODO: move back to view movies page
         } catch (e) {
             // Log error
             console.log(e);
+        } finally {
+            // goes back to movies
+            router.push('/');
         }
     };
 
@@ -59,11 +66,47 @@ export default function Home() {
         <Layout active={3}>
             <SEO title={"Edit Movie"} />
             <section className="px-32 py-2 mt-28 justify-center items-center">
-                <h1 className="text-5xl">Edit Movie</h1>
+                <h1 className="text-5xl mb-4">Edit Movie</h1>
+                <button onClick={() => handleUpdate()}>Hello</button>
                 <div>
                     {!loading ? (
-                        <div className="REPLACE_INSIDE / PLACE FORM INSIDE">
-                            <h1>{movie.name}X</h1>
+                        <div>
+                            <Radios txLvl={txLvl} setTxLvl={setTxLvl}/>
+                            <div className='flex flex-col'>
+                            <label htmlFor="name" className='font-semibold'>Movie Title</label>
+                            <input type="text" value={movie.name} onChange={(e)=> setMovie({...movie, name: e.target.value})} />
+                            
+                            <div className='flex flex-row my-4'>
+                                <div className='flex flex-col w-1/2 mr-4'>
+                                <label htmlFor="year" className='font-semibold'>Year</label>
+                                <input type="text" value={movie.year} onChange={(e)=> setMovie({...movie, year: parseInt(e.target.value)})} />
+                                </div>
+                
+                                <div className='flex flex-col w-1/2'>
+                                <label htmlFor="director" className='font-semibold'>Director</label>
+                                <input type="text" value={movie.director} onChange={(e)=> setMovie({...movie, director: e.target.value})} />
+                                </div>
+                            </div>
+                
+                            <div className='flex flex-row mb-4'>
+                                <div className='flex flex-col w-1/3 mr-4'>
+                                <label htmlFor="genre1" className='font-semibold'>Genre 1</label>
+                                <input type="text" value={movie.genre1} onChange={(e)=> setMovie({...movie, genre1: e.target.value})} />
+                                </div>
+                
+                                <div className='flex flex-col w-1/3 mr-4'>
+                                <label htmlFor="genre2" className='font-semibold'>Genre 2</label>
+                                <input type="text" value={movie.genre2} onChange={(e)=> setMovie({...movie, genre2: e.target.value})} />
+                                </div>
+                
+                                <div className='flex flex-col w-1/3'>
+                                <label htmlFor="genre3" className='font-semibold'>Genre 3</label>
+                                <input type="text" value={movie.genre3} onChange={(e)=> setMovie({...movie, genre3: e.target.value})} />
+                                </div>
+                            </div>
+                            </div>
+                            
+                            <Button to="/" onClick={() => handleUpdate()}>Update</Button>
                         </div>
                     ) : (
                         <Spinner />
