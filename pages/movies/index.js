@@ -87,7 +87,7 @@ export default function Home() {
               </div>
             </div>
             
-            <Button onClick={() => handleSubmit()}>Add Movie</Button>
+            <Button to='/' onClick={() => handleSubmit()}>Add Movie</Button>
           </div>
         </section>
     </Layout>

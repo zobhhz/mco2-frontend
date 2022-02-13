@@ -8,13 +8,14 @@ import { axiosInstance as axios } from "../config/axios.config"; //IMPORTANT
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import Spinner from "../components/Spinner/Spinner";
+import Radios from "../components/Radios/Radios";
 
 export default function Home() {
     const router = useRouter();
 
     const [search, setSearchParam] = useState(router.query?.search || "");
     const [page, setPageParam] = useState(router.query.page || 1);
-    const [tx, setTxParam] = useState(router.query?.txLvl || "");
+    const [tx, setTxLvl] = useState(router.query?.txLvl || "SERIALIZABLE");
     const [loading, setLoading] = useState(true);
     const [movies, setMovies] = useState([]);
 
@@ -129,7 +130,10 @@ export default function Home() {
                         Add Movie
                     </Button>
                 </div>
-                <div className="flex flex-col w-full mb-8">
+
+                <Radios txLvl={tx} setTxLvl={setTxLvl}/>
+
+                <div className="flex flex-col w-full my-8">
                     {!loading ? (
                         movies.map((item, index) => {
                             // converts to an array and removes null values

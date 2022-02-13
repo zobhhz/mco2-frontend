@@ -47,6 +47,18 @@ export default function Home() {
         }
     };
 
+    const handleDelete = async () => {
+        try {
+            setUpdating(true);
+            await axios.delete(`api/movies/${router.query.id}`,{ data: {txLvl} });
+            setUpdating(false);
+        } catch (e) {
+            console.log(e);
+        } finally {
+            router.push('/');
+        }
+    }
+
     // fetches the movie -> called in useEffect below
     async function fetchMovie() {
         setLoading(true);
@@ -66,8 +78,8 @@ export default function Home() {
         <Layout active={3}>
             <SEO title={"Edit Movie"} />
             <section className="px-32 py-2 mt-28 justify-center items-center">
-                <h1 className="text-5xl mb-4">Edit Movie</h1>
-                <button onClick={() => handleUpdate()}>Hello</button>
+                <h1 className="text-2xl md:text-5xl mb-4">Edit Movie</h1>
+                
                 <div>
                     {!loading ? (
                         <div>
@@ -106,7 +118,8 @@ export default function Home() {
                             </div>
                             </div>
                             
-                            <Button to="/" onClick={() => handleUpdate()}>Update</Button>
+                            <Button variant="white" className="mr-4" onClick={() => handleDelete()}>Delete</Button>
+                            <Button onClick={() => handleUpdate()}>Save</Button>
                         </div>
                     ) : (
                         <Spinner />
