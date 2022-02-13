@@ -1,0 +1,47 @@
+[
+    {
+        "name": "Testing Data 1",
+        "director": "Edward Flores",
+        "genre1": "Comedy",
+        "genre2": "Science Fiction",
+        "genre3": "Romance",
+        "uuid": "1",
+        "year": 2019
+    },
+    {
+        "name": "Testing Data 2",
+        "director": "Edward Flores",
+        "genre1": "Comedy",
+        "genre2": "Science Fiction",
+        "genre3": "Romance",
+        "uuid": "2",
+        "year": 2019
+    },
+    {
+        "name": "Testing Data 3",
+        "director": "Edward Flores",
+        "genre1": "Comedy",
+        "genre2": "Science Fiction",
+        "genre3": "Romance",
+        "uuid": "3",
+        "year": 2019
+    },
+    {
+        "name": "Testing Data 4",
+        "director": "Edward Flores",
+        "genre1": "Comedy",
+        "genre2": "Science Fiction",
+        "genre3": "Romance",
+        "uuid": "4",
+        "year": 2019
+    },
+    {
+        "name": "Testing Data 5",
+        "director": "Edward Flores",
+        "genre1": "Comedy",
+        "genre2": "Science Fiction",
+        "genre3": "Romance",
+        "uuid": "5",
+        "year": 2019
+    }
+]
