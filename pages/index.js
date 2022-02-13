@@ -18,41 +18,46 @@ export default function Home() {
     const [loading, setLoading] = useState(true);
     const [movies, setMovies] = useState([]);
 
-    console.log(router.query.page);
-
     async function fetchMovies() {
+        // set loading to render loading component
         setLoading(true);
 
+        // get query from URL or useState defaults
         const query = {
             search: router.query?.search || search,
             page: router.query?.page || page,
             txLvl: router.query?.txLvl || tx,
         };
 
-        console.log("SEARCH", search);
+        // trim end whitespaces of text
         if (query.search.trimEnd() === "") delete query.search;
         if (query.txLvl.trimEnd() === "") delete query.txLvl;
 
         try {
+            // make request
             const result = await axios.get("/api/movies", { params: query });
+            // I suggest console logging result to visualize the request being retrieved
+            //            console.log(result);
+
             setMovies(result.data.data);
-            console.log(result);
         } catch (e) {
             console.log(e);
         }
+        // set to false to unrender loading component
         setLoading(false);
     }
+
+    //fetch movie when router is ready
     useEffect(() => {
+        // sometimes empty kasi yung queries from the url for some reason on refresh, kaya we need the line below
+        if (!router.isReady) return;
         fetchMovies();
         return () => {};
-    }, []);
+    }, [router, router.isReady]);
 
-    useEffect(() => {
-        fetchMovies();
-        return () => {};
-    }, [router]);
-
+    // handlesearch
     const handleSearch = () => {
+        // set page to 1
         setPageParam(1);
         const query = {
             search,
@@ -60,33 +65,46 @@ export default function Home() {
             txLvl: tx,
         };
 
+        // delete empty query fields in object
         if (query.txLvl === "") delete query.txLvl;
         if (query.search === "") delete query.search;
-        console.log(query.search);
 
+        // EXAMPLES
+        // (e.g. If go to next page only without searching) change url to /?page=1
+        // (e.g. If txLvl Missing) change url to /?page=1&search=test
+        // (e.g. If complete) change url to /?page=1&search=test&txLvl=READ UNCOMMITTED
+        // pathname = /   + query (in object form) = ?page=1&search=test&txLvl=READ%20READUNCOMMITTED
         router.push({ pathname: "/", query }, undefined, { shallow: true });
     };
 
     const handleChangePage = (direction) => {
-        const newPage = (direction === "next" ? 1 : -1) + parseInt(router.query.page);
+        // increment or decrement
+        const newPage = (direction === "next" ? 1 : -1) + parseInt(router.query.page || page);
+        //set New Page
         setPageParam(newPage);
-
         const query = {
             search,
             page: newPage,
             txLvl: tx,
         };
-
+        // if page is less than 1 force page to 1
         if (query.page < 1) query.page === 1;
+
+        // delete empty
         if (query.txLvl === "") delete query.txLvl;
         if (query.search === "") delete query.search;
 
+        // EXAMPLES
+        // (e.g. If go to next page only without searching) change url to /?page=1
+        // (e.g. If txLvl Missing) change url to /?page=1&search=test
+        // (e.g. If complete) change url to /?page=1&search=test&txLvl=READ UNCOMMITTED
+        // pathname = /   + query (in object form) = ?page=1&search=test&txLvl=READ%20READUNCOMMITTED
         router.push({ pathname: "/", query }, undefined, { shallow: true });
     };
     return (
         <Layout active={0}>
             <SEO title={"All Movies"} />
-            <section className="px-32 py-2 mt-28 justify-center items-center">
+            <section className="px-8 md:px-32 py-2 mt-28 justify-center items-center">
                 {/* Header */}
                 <h1 className="text-center text-2xl md:text-6xl">All Movies</h1>
 
@@ -146,8 +164,12 @@ export default function Home() {
                     )}
                 </div>
                 {/** PAGINATION */}
-                <div className={`flex justify-between ${router.query.page <= 1 ? "flex-row-reverse" : "flex-row"} }`}>
-                    {router.query.page > 1 ? (
+                <div
+                    className={`flex justify-between ${
+                        (router.query.page || page) <= 1 ? "flex-row-reverse" : "flex-row"
+                    } }`}
+                >
+                    {(router.query.page || page) > 1 ? (
                         <button
                             className="ml-1 py-2 px-4 max-h-14 max-w-12 text-base text-white font-bold inline-block text-center h-auto rounded-md bg-purple-400"
                             onClick={() => handleChangePage("prev")}
