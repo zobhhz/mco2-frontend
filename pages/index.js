@@ -147,7 +147,7 @@ export default function Home() {
                                         </a>
                                     </Link>
                                     <div className="flex flex-row">
-                                        <p className="mr-2">Released {item.year} •</p>
+                                        <p className="mr-2">Released {item?.year} •</p>
                                         {item.director ? <p>by {item.director}</p> : null}
                                     </div>
 
