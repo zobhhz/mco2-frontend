@@ -91,7 +91,7 @@ export default function Home() {
                             <div className='flex flex-row my-4'>
                                 <div className='flex flex-col w-1/2 mr-4'>
                                 <label htmlFor="year" className='font-semibold'>Year</label>
-                                <input type="text" value={movie.year} onChange={(e)=> setMovie({...movie, year: parseInt(e.target.value)})} />
+                                <input type="number" value={movie.year} onChange={(e)=> setMovie({...movie, year: parseInt(e.target.value)})} />
                                 </div>
                 
                                 <div className='flex flex-col w-1/2'>
