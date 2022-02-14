@@ -146,7 +146,10 @@ export default function Home() {
                                             {item.name}
                                         </a>
                                     </Link>
-                                    {item.director ? <p>by {item.director}</p> : null}
+                                    <div className="flex flex-row">
+                                        <p className="mr-2">Released {item.year} •</p>
+                                        {item.director ? <p>by {item.director}</p> : null}
+                                    </div>
 
                                     {/** GENRES */}
                                     <div className="flex flex-row flex-start space-x-1">
