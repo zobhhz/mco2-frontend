@@ -14,6 +14,7 @@ export default function Home() {
     const [updating, setUpdating] = useState(false);
     const router = useRouter();
     const [txLvl, setTxLvl] = useState("SERIALIZABLE"); // default is SERIALIZABLE
+    const [oldYear, setOldYear] = useState(0);
 
     const [movie, setMovie] = useState({
         uuid: "",
@@ -50,7 +51,7 @@ export default function Home() {
     const handleDelete = async () => {
         try {
             setUpdating(true);
-            await axios.delete(`api/movies/${router.query.id}`,{ data: {txLvl} });
+            await axios.delete(`api/movies/${router.query.id}`,{ data: {txLvl,year: oldYear} });
             setUpdating(false);
         } catch (e) {
             console.log(e);
@@ -61,10 +62,16 @@ export default function Home() {
 
     // fetches the movie -> called in useEffect below
     async function fetchMovie() {
-        setLoading(true);
-        const { data } = await axios.get(`api/movies/${router.query.id}`);
-        setMovie(data.data);
-        setLoading(false);
+        try {
+            setLoading(true);
+            const { data } = await axios.get(`api/movies/${router.query.id}`);
+            setMovie(data.data);
+            setOldYear(data.data.year);
+            setLoading(false); 
+        } catch (e) {
+            console.log("FETCH MOVIE ERROR: ",e);
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
