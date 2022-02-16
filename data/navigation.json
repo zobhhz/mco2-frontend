@@ -1,10 +1,6 @@
 [
     {
-        "name":"All Movies",
-        "link":"/"
-    },
-    {
-        "name":"Generate Reports",
-        "link":"/reports"
+        "name": "All Movies",
+        "link": "/"
     }
 ]

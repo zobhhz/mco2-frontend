@@ -36,7 +36,10 @@ export default function Home() {
 
         try {
             // make request
+            console.time();
             const result = await axios.get("/api/movies", { params: query });
+            console.timeEnd();
+
             // I suggest console logging result to visualize the request being retrieved
             //            console.log(result);
 
@@ -131,7 +134,7 @@ export default function Home() {
                     </Button>
                 </div>
 
-                <Radios txLvl={tx} setTxLvl={setTxLvl}/>
+                <Radios txLvl={tx} setTxLvl={setTxLvl} />
 
                 <div className="flex flex-col w-full my-8">
                     {!loading ? (
