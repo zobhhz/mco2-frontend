@@ -7,7 +7,7 @@ const Radios = ({txLvl, setTxLvl}) => {
     return (
         <>
             <label htmlFor="txLvl" className='font-semibold'>
-            Transaction Level
+            Isolation Level
             </label>
             <div className='flex flex-col md:flex-row justify-center md:space-x-4'>
             {tx.map((item, index) => {
